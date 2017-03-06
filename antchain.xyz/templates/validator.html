@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+
+        $(function () {
+            var zongshu = 1;
+            $.get('/validator_zongshu', function (result) {
+                zongshu = parseInt(result);
+
+                var element = $('#validator');
+                var options = {
+                    bootstrapMajorVersion: 3,
+                    currentPage: 1,
+                    numberOfPages: 10,
+                    totalPages: zongshu,
+                    size: "large",
+                    alignment: "Center",
+                    itemTexts: function (type, page, current) {
+                        switch (type) {
+                            case "first":
+                                return "第一页";
+                            case "prev":
+                                return "前一页";
+                            case "next":
+                                return "后一页";
+                            case "last":
+                                return "最后一页";
+                            case "page":
+                                return page;
+                        }
+                    }, onPageClicked: function (event, originalEvent, type, page) { //异步换页
+                        $.post("/validator", {'page': page}, function (data) {
+                            $("div.validator_s").html(data);
+                        });
+                    },
+                };
+                element.bootstrapPaginator(options);
+            });
+        });
+
+    </script>
+
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-lg-12 btn-lg">
+            <ul class="breadcrumb">
+                <li><a href="/">首页</a> <span class="divider"></span></li>
+                <li class="active">记账候选人</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 clearfix">
+            <div>
+                <ul class="pagination" id='validator'></ul>
+            </div>
+        </div>
+
+        <div class="col-lg-12 clearfix">
+            <div class="validator_s">
+                {% include "validator_s.html" %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

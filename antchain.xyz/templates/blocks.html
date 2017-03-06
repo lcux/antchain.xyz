@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+
+{% block titel %}区块信息页面{% endblock %}
+
+{% block page_content %}
+    <div class="container">
+        <div class="page-header">
+            <table width="900" border="1">
+                <tr>
+                    <td width="100" align="center" valign="middle">1</td>
+                    <td width="200">version</td>
+                    <td>{{ result['version'] }}</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="middle">2</td>
+                    <td width="200">
+                        <pre>previousblockhash</pre>
+                    </td>
+                    <td>{{ result['previousblockhash'] }}</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="middle">3</td>
+                    <td width="200">
+                        <pre>merkleroot</pre>
+                    </td>
+                    <td>{{ result['merkleroot'] }}</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="middle">4</td>
+                    <td width="200">
+                        <pre>time</pre>
+                    </td>
+                    <td>{{ moment(riqi).format('YYYY年M月D日 hh:mm:ss') }}
+                        ||| {{ moment(riqi).fromNow(refresh=True) }}</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="middle">5</td>
+                    <td width="200">
+                        <pre>height</pre>
+                    </td>
+                    <td>{{ result['height'] }}</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="middle">6</td>
+                    <td width="200">
+                        <pre>nextminer</pre>
+                    </td>
+                    <td>{{ result['nextminer'] }}</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="middle">7</td>
+                    <td>
+                        <pre>confirmations</pre>
+                    </td>
+                    <td>{{ result['confirmations'] }}</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="middle">8</td>
+                    <td>
+                        <pre>size</pre>
+                    </td>
+                    <td>{{ result['size'] }}</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="middle">9</td>
+                    <td>
+                        <pre>hash</pre>
+                    </td>
+                    <td>{{ result['hash'] }}</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="middle">10</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+            <table>
+                <ul>
+                    {% for r in result %}
+                        <li>{{ r }} >> {{ result[r] }}</li>
+                    {% endfor %}
+                </ul>
+
+            </table>
+
+        </div>
+        <div>
+            {{ result0 }}
+        </div>
+        <div>
+            {{ result1 }}
+        </div>
+    </div>
+{% endblock %}
