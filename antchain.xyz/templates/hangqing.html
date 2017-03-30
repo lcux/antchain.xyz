@@ -8,7 +8,7 @@
             SOSOBTC('Market').init({
                 id: 'sosobtc_market',
                 btc: ['okcoin', 'coinbase', ],
-                others: ['eth_cnbtc','ans_yunbi', 'ans_yuanbaohui', 'ans_19800','anc_19800'],
+                others: ['ans_yunbi', 'ans_yuanbaohui', 'ans_19800','ansbtc_bittrex','anc_19800'],
                 row: ['price', 'buy', 'sell', 'high', 'low', 'vol'],
                 show_tip: [true],
                 td_height: ['30px']
@@ -61,6 +61,7 @@
                     </li>
                     <li><a href="#yuanbaohui" data-toggle="tab">元宝网行情</a></li>
                     <li><a href="#19800" data-toggle="tab">19800网行情</a></li>
+                    <li><a href="#bittrex" data-toggle="tab">Bittrex网行情</a></li>
                     <li><a href="#19800bi" data-toggle="tab">19800小蚁币</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
@@ -119,6 +120,26 @@
                                 "default_open_tools": false,
                                 "hide_logo": true,
                                 "container": "19800_container"
+                            })
+                        </script>
+                        <!-- SOSOBTC Widget End -->
+                    </div>
+                    <div class="tab-pane fade" id="bittrex">
+
+                        <div style="width: 100%; height: 580px;" id="bittrex_container"></div>
+                        <!-- SOSOBTC Widget Begin -->
+                        <script type="text/javascript"
+                                src="https://static2.sosobtc.com/sb.js"
+                        ></script>
+                        <script type="text/javascript">
+                            new SOSOBTC.widget({
+                                "symbol": "ANSBTC:bittrex",
+                                "default_step": 3600,
+                                "default_theme": "light",
+                                "disable_theme_change": false,
+                                "default_open_tools": false,
+                                "hide_logo": true,
+                                "container": "bittrex_container"
                             })
                         </script>
                         <!-- SOSOBTC Widget End -->
