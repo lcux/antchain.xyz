@@ -12,6 +12,7 @@ from pymongo import MongoClient
 
 def contrast():
     cur = db.Address.find({},{'balance':1,'utxo':1})
+    print(cur.count())
     for d in cur:
         m=[]
         for u in d['utxo']:
@@ -28,13 +29,14 @@ def contrast():
                     v = float(fs % v)
             m.append({'unit':unit,'value':v})
 
-        d['balance'].sort(key=lambda x: x['unit'], reverse=True)
+        d=list(d['balance'].values())
+        d.sort(key=lambda x: x['unit'], reverse=True)
         m.sort(key=lambda x: x['unit'], reverse=True)
 
-        if d['balance']==m:
+        if d==m:
             continue
         else:
-            print('balance -->',d['balance'])
+            print('balance -->',d)
             print('utxo    -->',m)
             print('\n')
 
