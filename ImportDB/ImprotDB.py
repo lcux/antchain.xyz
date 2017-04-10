@@ -177,7 +177,8 @@ class Address:
         collection = {
             '_id': self.addr,
             'address': self.addr,
-            'balance': [{'value': self.value, 'unit': self.unit}],
+            # 'balance': [{'value': self.value, 'unit': self.unit}],
+            'balance':{self.asset:{'value':self.value,'unit':self.unit}},
             'txs': [{'txid': self.txid}],
             # 'utxo':{self.asset:{self.utxo}},
             'utxo': {self.asset: [self.utxo]},
@@ -338,29 +339,19 @@ def sync_address(tx_id, tx_vin, tx_vout, timestamp):
         asset = r[x]['asset']
         addr_cur_vin = db.Address.find_one({'_id': r[x]['address']})
         if addr_cur_vin:
-            l = [s['unit'] for s in addr_cur_vin['balance']]
-            if unit in l:
-                i = l.index(unit)
-                addr_cur_vin['balance'][i]['value'] -= value
-                if precision:
-                    fs = '%0.' + str(precision) + 'f'
-                    addr_cur_vin['balance'][i]['value'] = float(fs % addr_cur_vin['balance'][i]['value'])
-            else:
-                print('impossible error!')
-            db.Address.update({'_id': r[x]['address']},
-                              {'$set': {'balance': addr_cur_vin['balance']}})
-            # print('Change', addr_cur['address'])
-            vin_address.add(r[x]['address'])
-
+            addr_cur_vin['balance'][asset]['value'] -= value
+            if precision:
+                fs = '%0.' + str(precision) + 'f'
+                addr_cur_vin['balance'][asset]['value'] = float(fs % addr_cur_vin['balance'][asset]['value'])
             # utxo
-            # utxo = {'txid': txid, 'index': x, 'value': value, 'unit': unit, 'asset': asset}
             for ux in addr_cur_vin['utxo'][asset]:
                 try:
                     if txid == ux['txid'] and index == ux['index']:
                         addr_cur_vin['utxo'][asset].remove(ux)
-                        db.Address.update({'_id': r[x]['address']}, {'$set': {'utxo': addr_cur_vin['utxo']}})
+                        db.Address.update({'_id': r[x]['address']}, {'$set': {'balance': addr_cur_vin['balance'],'utxo': addr_cur_vin['utxo']}})
                 except Exception as e:
                     print(e)
+            vin_address.add(r[x]['address'])
         else:
             print('impossible error！')
 
@@ -384,27 +375,21 @@ def sync_address(tx_id, tx_vin, tx_vout, timestamp):
             unit = c[y]['unit']
             precision = c[y]['precision']
             asset = c[y]['asset']
-            l = [zz['unit'] for zz in addr_cur_vout['balance']]
-            if unit in l:
-                i = l.index(unit)
-                addr_cur_vout['balance'][i]['value'] += value
+            # 'balance':{self.asset:{'value':self.value,'unit':self.unit}}
+            if asset in addr_cur_vout['balance'].keys():
+                addr_cur_vout['balance'][asset]['value'] += value
                 if precision:
                     fs = '%0.' + str(precision) + 'f'
-                    addr_cur_vout['balance'][i]['value'] = float(fs % addr_cur_vout['balance'][i]['value'])
+                    addr_cur_vout['balance'][asset]['value'] = float(fs % addr_cur_vout['balance'][asset]['value'])
             else:
-                addr_cur_vout['balance'].append({'value': value, 'unit': unit})
-
-            db.Address.update({'_id': c[y]['address']}, {'$set': {'balance': addr_cur_vout['balance']}})
-            # print('Change', addr_cur['address'])
-            vout_address.add(c[y]['address'])
-
+                addr_cur_vout['balance'][asset]={'value': value, 'unit': unit}
             # utxo
             utxo = {'txid': txid, 'index': y, 'value': value, 'unit': unit, 'asset': asset}
             if asset not in addr_cur_vout['utxo']:
                 addr_cur_vout['utxo'][asset] = []
             addr_cur_vout['utxo'][asset].append(utxo)
-            db.Address.update({'_id': c[y]['address']}, {'$set': {'utxo': addr_cur_vout['utxo']}})
-
+            db.Address.update({'_id': c[y]['address']}, {'$set': {'balance': addr_cur_vout['balance'],'utxo': addr_cur_vout['utxo']}})
+            vout_address.add(c[y]['address'])
     # 更新本次交易涉及的地址的交易字段和交易时间字段
     addresses = vin_address | vout_address
     for d in addresses:
