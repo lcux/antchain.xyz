@@ -1,0 +1,74 @@
+<table class="table table-striped table-hover" style="table-layout:fixed">
+    <thead>
+    <tr class='info'>
+        <th style='width:15%;vertical-align: middle;text-align: center;'>类型</th>
+        <th style='width:25%;vertical-align: middle;text-align: center;'>交易散列值</th>
+        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>区块高度</th>
+        <th style='width:20%;vertical-align: middle;text-align: center;'>交易时间</th>
+        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>输入/输出量</th>
+        {#        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>输出量</th>#}
+        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>手续费</th>
+        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>大小（Bytes)</th>
+        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>交易特性</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ss in not_tx %}
+        <tr class="{{ loop.cycle('white', 'active') }}">
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'>
+                <button style="" type="button"
+                        class="btn-sm {% if ss['type']=="ContractTransaction" %}btn-info{% elif ss['type']=="ClaimTransaction" %}btn-success{% elif ss['type']=="RegisterTransaction" %}btn-warning{% elif ss['type']=="IssueTransaction" %}btn-danger{% elif ss['type']=="PublishTransaction" %}btn-publish{% else %}btn-zdy{% endif %} btn-block"
+                        data-toggle="tooltip" title="{{ ss['name'] }}"><strong>未确认的</strong> {{ ss['name'] }}</button>
+            </td>
+            <td class="col-md-2"
+                style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align: middle;text-align: center;'>{{ ss['txid']|truncate(30,True) }}</td>
+            <td class="col-md-1 hidden-xs"
+                style='vertical-align: middle;text-align: center;'>{{ ss['block_height'] }}</td>
+            <td class="col-md-2" style='vertical-align: middle;text-align: center;'>{{ ss['timestamp'] }}</td>
+            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['vin']|length }} 笔
+            </td>
+            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['vout']|length }}
+                笔
+            </td>
+            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['cost'] }}小蚁币</td>
+            <td class="col-md-2 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['size'] }} Bytes
+            </td>
+            <td class="col-md-2 hidden-xs" style='vertical-align: middle;text-align: center;color: #e40c18;'>
+                {% if ss['attributes'] %}
+                    {% for i in range(ss['attributes']|length) %}
+                        {{ ss['attributes'][i]['usage'] }} {% endfor %}{% else %}无{% endif %}</td>
+
+        </tr>
+    {% endfor %}
+    {% for ss in tx %}
+        <tr class="{{ loop.cycle('white', 'active') }}">
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'>
+                <button style="" type="button"
+                        class="btn-sm {% if ss['type']=="ContractTransaction" %}btn-info{% elif ss['type']=="ClaimTransaction" %}btn-success{% elif ss['type']=="RegisterTransaction" %}btn-warning{% elif ss['type']=="IssueTransaction" %}btn-danger{% elif ss['type']=="PublishTransaction" %}btn-publish{% else %}btn-zdy{% endif %} btn-block"
+                        data-toggle="tooltip" title="{{ ss['name'] }}">{{ ss['name'] }}</button>
+            </td>
+            <td class="col-md-2"
+                style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align: middle;text-align: center;'>
+                <a
+                        href="/tx/hash/{{ ss['txid'] }}">{{ ss['txid']|truncate(30,True) }}</a></td>
+            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'><a
+                    href="/block/height/{{ ss['block_height'] }}">{{ ss['block_height'] }}</a></td>
+            <td class="col-md-2" style='vertical-align: middle;text-align: center;'>{{  moment(ss['timestamp']).fromNow() }}</td>
+            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['vin']|length }}
+                笔/{{ ss['vout']|length }}笔
+            </td>
+            {#            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['vout']|length }}#}
+            {#                笔#}
+            {#            </td>#}
+            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['net_fee']|float + ss['sys_fee']|float  }}小蚁币</td>
+            <td class="col-md-2 hidden-xs" style='vertical-align: middle;text-align: center;'>{% if ss['size']>1024 %}
+                {{ int(ss['size']/1024) }}KB {% else %}{{ ss['size'] }}Bytes{% endif %}
+            </td>
+            <td class="col-md-2 hidden-xs" style='vertical-align: middle;text-align: center;color: #e40c18;'>
+                {% if ss['attributes'] %}
+                    {% for i in range(ss['attributes']|length) %}
+                        {{ ss['attributes'][i]['usage'] }}<br>{% endfor %}{% else %}无{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

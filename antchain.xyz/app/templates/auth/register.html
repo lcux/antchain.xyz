@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title%}AntChain.XYZ - Register{% endblock %}
+
+{% block page_content %}
+ <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <div class="col-center-block">
+                <div class="page-header center-block">
+                    <center><h1>注册账户</h1></center>
+                </div>
+                <div class="col-md-12">
+                    {{ wtf.quick_form(form) }}
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-4"></div>
+    </div>
+{% endblock %}

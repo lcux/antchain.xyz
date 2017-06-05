@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static',filename='js/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/charts.js') }}"></script>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-6" style="text-align: center;height: 400px;border:1px solid #22acfc;margin-top: 10px;" id="main"></div>
+                <div class="col-lg-6" style="text-align: center;height: 400px;border:1px solid #22acfc;margin-top: 10px;" id="haha"></div>
+                <div class="col-lg-12" style="height: 400px;border: 1px solid #22acfc;margin-top: 10px" id="dizhizengzhang"></div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

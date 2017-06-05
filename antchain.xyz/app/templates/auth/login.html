@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}AntChain.XYZ - 登录{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <div class="col-center-block">
+                <div class="page-header center-block">
+                    <center><h1>登录帐号</h1></center>
+                </div>
+                <div class="col-md-12">
+                    {{ wtf.quick_form(form) }}
+                    <br>
+                    <p><a href="{{ url_for('auth.password_reset_request') }}">Forgot your password?</a> ||<a
+                            href="{{ url_for('auth.register') }}">New user?</a></p>
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-4"></div>
+    </div>
+{% endblock %}

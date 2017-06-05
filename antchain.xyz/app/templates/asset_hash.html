@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-lg-12 btn-lg">
+            <ul class="breadcrumb">
+                <li><a href="/">首页</a> <span class="divider"></span></li>
+                <li><a href="/asset">资产</a><span class="divider"></span></li>
+                <li class="active">{{ asset['asset']['name'][0]['name'] }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 clearfix">
+            <table class="table table-striped table-hover" style="table-layout:fixed">
+                <tbody>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>名称</td>
+                    <td class="col-xs-9"
+                        style='vertical-align: middle;text-align: left;'>{{ asset['asset']['name'][0]['name'] }}</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>标识符</td>
+                    <td class="col-xs-9"
+                        style='width:30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align: middle;text-align: left;'>{{ asset['txid'] }}</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>类型</td>
+                    <td class="col-xs-9"
+                        style='vertical-align: middle;text-align: left;'>{{ asset['asset']['type'] }}</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>单位精度</td>
+                    <td class="col-xs-9"
+                        style='vertical-align: middle;text-align: left;'>可精确到小数点后<strong><span style="color: #ff0e11;"> {{ asset['asset']['precision'] }}</span></strong>位</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>最大供给量</td>
+                    <td class="col-xs-10">
+                        {% if asset['asset']['amount']=='-0.00000001' %}
+                            无上限
+                        {% else %}
+                            {{ asset['asset']['amount'] }} {{ asset['asset']['name'][0]['name'] }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>发行次数</td>
+                    <td class="col-xs-9"
+                        style='vertical-align: middle;text-align: left;'>{{ fxcs }}  次</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>当前发行量</td>
+                    <td class="col-xs-9"
+                        style='vertical-align: middle;text-align: left;'>{{ fxl }} {{ asset['asset']['name'][0]['name'] }}</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>持有人</td>
+                    <td class="col-xs-9" style='vertical-align: middle;text-align: left;'>{{ cyrs }} 人</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-4" style='vertical-align: middle;text-align: right;'>发行人</td>
+                    <td class="col-xs-9"
+                        style='width:30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align: middle;text-align: left;'>{{ asset['asset']['owner'] }}</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>管理员</td>
+                    <td class="col-xs-9"
+                        style='vertical-align: middle;text-align: left;'>{{ asset['asset']['admin'] }}</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3" style='vertical-align: middle;text-align: right;'>注册区块</td>
+                    <td class="col-xs-9" style='vertical-align: middle;text-align: left;'><a
+                            href="/block/height/{{ asset['block_height'] }}">{{ asset['block_height'] }}</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div>
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#chiyouren" data-toggle="tab">持有人</a>
+                    </li>
+                    <li><a href="#dengji" data-toggle="tab">资产登记</a></li>
+                    <li><a href="#faxing" data-toggle="tab">资产发行</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="chiyouren">
+                        <table class="table table-striped table-hover" style="table-layout:fixed">
+                            <thead>
+                            <tr class='info'>
+                                <th style='width:10%;vertical-align: middle;text-align: center;'>序号</th>
+                                <th style='width:40%;vertical-align: middle;text-align: center;'>地址</th>
+                                <th style='vertical-align: middle;text-align: center;'>余额</th>
+                                <th style='vertical-align: middle;text-align: center;'>最近交易时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ss in zongde %}
+                                <tr class="{{ loop.cycle('white', 'active') }}">
+                                    <td class="col-md-1"
+                                        style='vertical-align: middle;text-align: center;'>{{ loop.index }}</td>
+                                    <td class="col-md-5"
+                                        style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align: middle;text-align: center;'>
+                                        <a
+                                                href="/address/{{ ss[0] }}">{{ ss[0] }}</a></td>
+                                    <td class="col-md-3"
+                                        style='vertical-align: middle;text-align: center;'>{{ ss[1] }} {{ asset['asset']['name'][0]['name'] }}</td>
+                                    <td class="col-md-3"
+                                        style='vertical-align: middle;text-align: center;'>{{ moment(ss[2]).format('LLL') }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade " id="dengji">
+                        {% include 'register_tx.html' %}
+                    </div>
+                    <div class="tab-pane fade" id="faxing">
+                        {% include 'asset_issue_tx.html' %}
+                    </div>
+
+                </div>
+                <script>
+                    $(function () {
+                        $('#myTab li:eq(1) a').tab('show');
+                    });
+                </script>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

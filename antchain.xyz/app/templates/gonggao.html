@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}公告{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1 style='vertical-align: middle;text-align:center;'>项目每日进度</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>2017年2月8日进度</h3><br>
+            1.增加公告页面，标记每日工作进度；<br>
+            2.为每个账户地址添加二维码图片显示功能；<br>
+            3.在后端程序中添加生成二维码地址图片功能；<br>
+
+            <h3>2017年2月11日进度</h3><br>
+            1.增加图表显示功能；<br>
+            <h3>2017年2月15日进度</h3><br>
+            1.优化智能合约交易内容显示；<br>
+            2.调整每个资产页面的内容显示方式；<br>
+            3.增加资产页面内容，添加单位精度和发行次数项目；<br>
+            4.优化资产发行选项卡的显示内容；<br>
+            <h3>2017年2月17日进度</h3><br>
+            1.优化智能合约发布交易的显示内容，并对合约脚本进行了反汇编操作；<br>
+            2.增加的交易特性显示功能；<br>
+            3.增加了备案相关信息的显示；<br>
+            <h3>2017年3月13日进度</h3><br>
+            1.资产排名由100扩大至500；<br>
+            2.对地址下的每笔交易中自身进行了着色，便于查找；<br>
+            3.对区块和地址下的交易顺序进行了反向排序，确保最近交易在最上面；<br>
+
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script>
+    <div class="coinmarketcap-currency-widget" data-currency="antshares" data-base="USD" data-secondary="BTC"
+         data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD"
+         data-statsticker="false"></div>
+{% endblock %}

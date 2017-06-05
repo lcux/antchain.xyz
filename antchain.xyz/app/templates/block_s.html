@@ -1,0 +1,28 @@
+<table class="table table-striped table-hover">
+    <thead>
+    <tr class='info'>
+        <th style='vertical-align: middle;text-align: center;'>高度</th>
+        <th style='vertical-align: middle;text-align: center;'>时间</th>
+        <th style='vertical-align: middle;text-align: center;'>交易数</th>
+        <th style='vertical-align: middle;text-align: center;'>费用</th>
+        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>记账人</th>
+        <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>版本</th>
+        <th style='vertical-align: middle;text-align: center;'>大小</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ss in block %}
+        <tr class="{{ loop.cycle('white', 'active') }}">
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'><a
+                    href="/block/height/{{ ss['height'] }}">{{ ss['height'] }}</a> </td>
+{#            <td class="col-md-2" style='vertical-align: middle;text-align: center;'>{{ ss['timestamp'] }}</td>#}
+            <td class="col-md-2" style='vertical-align: middle;text-align: center;'>{{ moment(ss['timestamp']).fromNow() }}</td>
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'>{{ ss['txcount'] }} 笔</td>
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'>{{ ss['cost'] }} 小蚁币</td>
+            <td class="col-md-2 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['nextminer'] }}</td>
+            <td class="col-md-1 hidden-xs" style='vertical-align: middle;text-align: center;'>{{ ss['version'] }}</td>
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'>{% if ss['size']>1024 %} {{ ss['size']/1024|float('') }}KB {% else %}{{ ss['size'] }}Bytes{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

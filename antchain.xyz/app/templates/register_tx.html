@@ -1,0 +1,75 @@
+<div class="col-lg-12">
+    <div class="panel register">
+        <div class="row" style="height:25px;margin-left: 2px;margin-top: 5px;padding-bottom: 10px;margin-bottom: 5px">
+            <div class="col-sm-12" style="overflow: hidden;white-space:nowrap;text-overflow: ellipsis;">
+                <span class="pull-left">{{ tx['name'] }}交易:</span><a
+                    style="overflow: hidden;text-overflow: ellipsis;"
+                    href="/tx/hash/{{ tx['txid'] }}">{{ tx['txid'] }}</a> &nbsp;&nbsp;&nbsp; <a href="/asset/hash/{{ tx['txid'] }}"><span style="color: #ff2f3e;" >>资产详情< </span></a>
+            </div>
+        </div>
+{#        <div class="row" style="display: table;width: 100%;table-layout: fixed;margin-left: 3px;margin-right: 3px; border-top: 1px solid #dedede;border-bottom: 1px solid #dedede;">#}
+{#            <div class="col-lg-12" style="display: table-cell;">#}
+{#                <ul>#}
+{#                    <li></li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+        <div class="row"
+             style="display: table;width: 100%;table-layout: fixed;margin-left: 3px;margin-right: 3px; border-top: 1px solid #dedede;border-bottom: 1px solid #dedede;">
+            <div class="col-sm-6" style="padding-top: 10px;padding-bottom: 10px">
+                {% for srsc in tx['vin'] %}
+                    <span>
+                        <div class="row">
+                                    <nobr>
+                                        <div class="col-xs-8"
+                                             style="overflow: hidden;text-overflow: ellipsis;">
+                                            <a class="badge" href="/tx/hash/{{ srsc['txid'] }}"><span
+                                                    class="icon-angle-left"></span><span
+                                                    class="add"><</span></a><a
+                                                href="/address/{{ srsc['address'] }}">{{ srsc['address'] }}</a>
+                                        </div>
+                                        <div class="col-xs-4" style="text-align: right">
+                                            <span style="">-{{ srsc['value'] }} {{ srsc['unit'] }}</span>
+                                        </div>
+                                    </nobr>
+                                </div>
+                                </span>
+                {% endfor %}
+            </div>
+            <div class="col-sm-6" style="padding-top: 10px;padding-bottom: 10px">
+                {% for srsc in tx['vout'] %}
+                    <span>
+                        <div class="row">
+                                <nobr>
+                                    <div class="col-xs-7"
+                                         style="overflow: hidden;text-overflow: ellipsis;">
+                                            <a href="/address/{{ srsc['address'] }}">{{ srsc['address'] }}</a>
+                                        </div>
+                                        <div class="col-xs-5"
+                                             style="text-align: right">
+                                            <span>+{{ srsc['value'] }} {{ srsc['unit'] }}</span><span
+                                                style="">{% if srsc['to'] %}
+                                            <a class="badge"
+                                               href="/tx/hash/{{ srsc['to'] }}">></a>{% endif %}</span>
+                                        </div>
+                                </nobr>
+                        </div>
+                    </span>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="row" style="padding-top: 10px;margin-left: 2px;margin-right: 2px;margin-bottom: 5px">
+            {#                 <hr align="center" width="97%" color="#EAE6E8" style="height: 1px"/>#}
+            <nobr>
+                <div class="col-xs-6 cos-sm-6 col-lg-9" style="text-align: left">
+                    时间&nbsp;:&nbsp;{{ moment(tx['timestamp']).format('LLL') }}
+                </div>
+                <div class="col-xs-6 cos-sm-6 col-lg-3" style="text-align: right">
+                    手续费&nbsp;:&nbsp;网络费{{ tx['net_fee'] }} 小蚁币||系统费{{ tx['sys_fee'] }} 小蚁币
+                </div>
+            </nobr>
+        </div>
+    </div>
+</div>

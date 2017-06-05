@@ -3,7 +3,7 @@
 
 import requests
 
-d = 'http://139.224.226.167:20332'
+d = 'http://139.224.226.167:10332'
 p = {"jsonrpc": "2.0", "method": "", "params": [], "id": 1}
 
 

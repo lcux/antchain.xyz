@@ -1,0 +1,27 @@
+<table class="table table-striped table-hover">
+    <thead>
+    <tr class='info'>
+        <th style='vertical-align: middle;text-align: center;'>记账人</th>
+        <th style='vertical-align: middle;text-align: center;'>押金</th>
+        <th style='vertical-align: middle;text-align: center;'>地址</th>
+        <th style='vertical-align: middle;text-align: center;'>申请时间</th>
+        <th style='vertical-align: middle;text-align: center;'>费用</th>
+        <th style='vertical-align: middle;text-align: center;'>所在区块</th>
+        <th style='vertical-align: middle;text-align: center;'>状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ss in validator %}
+        <tr class="{{ loop.cycle('white', 'active') }}">
+            <td class="col-md-2" style='vertical-align: middle;text-align: center;'>{{ ss['pubkey']|truncate(25,True) }}</td>
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'>{{ ss['vout'][0]['value'] }}小蚁币</td>
+            <td class="col-md-2" style='vertical-align: middle;text-align: center;'><a
+                    href="/address/{{ ss['vout'][0]['address'] }}">{{ ss['vout'][0]['address'] }}</a></td>
+            <td class="col-md-2" style='vertical-align: middle;text-align: center;'>{{ moment(ss['timestamp']).format('LLL') }}</td>
+            <td class="col-md-2" style='vertical-align: middle;text-align: center;'>{{ ss['cost'] }}小蚁币</td>
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;'><a href="/block/height/{{ ss['block_height'] }}">{{ ss['block_height'] }}</a></td>
+            <td class="col-md-1" style='vertical-align: middle;text-align: center;color: rgba(252, 10, 9, 0.88)'>{{ zhuangtai }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

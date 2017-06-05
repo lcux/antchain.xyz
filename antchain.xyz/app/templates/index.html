@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $(document).ready(function () {
+            setInterval("startRequest1()", 9000);
+        });
+        function startRequest1() {
+            $.get('/bl', function (result) {
+                $("div.sy_block").html(result)
+                flask_moment_render_all();
+            });
+            $.get('/xtdd', function (result) {
+                $("div.sy_xtdd").html(result)
+                flask_moment_render_all();
+            });
+            $.get('/tx', function (result) {
+                $("div.sy_tx").html(result)
+                flask_moment_render_all();
+            });
+            $.get('/ad', function (result) {
+                $("div.sy_address").html(result)
+                flask_moment_render_all();
+            });
+        }
+
+
+    </script>
+
+    <script src="https://static2.sosobtc.com/public/assets/plugin/sosobtc_plugin.js"></script>
+    <script type="text/javascript">
+        (function () {
+            SOSOBTC('Market').init({
+                id: 'sosobtc_market',
+                others: ['ans_yunbi', 'ans_yuanbaohui', 'ans_19800', 'ansbtc_bittrex','ans_szzc51', 'anc_19800'],
+                btc: ['coinbase'],
+                row: ['price', 'high', 'low', 'vol'],
+                show_tip: false,
+                td_height: ['30px']
+            });
+        })();
+    </script>
+
+    <script type="text/javascript">
+        new WOW().init();
+    </script>
+{% endblock %}
+
+{% block page_content %}
+{#    <div class="row">#}
+{#        <div>#}
+{#            <div class="col-xs-6 col-sm-4 col-md-3 wow fadeIn animated" data-wow-duration="800ms" data-wow-delay="300ms"#}
+{#                 style="visibility: visible; animation-duration: 800ms; animation-delay: 300ms; animation-name: fadeIn;">#}
+{#                <div class="thumbnail">#}
+{#                    <a title="Onchain" href="http://www.onchain.com" target="_blank">#}
+{#                        <img width="300" height="150" class="lazy-2-1" data-original="/static/images/assets/onchain.jpg"#}
+{#                             src="/static/images/assets/onchain.jpg">#}
+{#                    </a>#}
+{#                    <div class="caption">#}
+{#                        <h4>#}
+{#                            <a href="http://www.onchain.com" target="_blank">Onchain</a>#}
+{#                        </h4>#}
+{#                        <p>#}
+{#                            Onchain（分布科技）是由小蚁核心开发团队组建成立的区块链公司，用小蚁的底层技术以及分布式账本技术框架（OnchainDNA）为企业用户提供区块链解决方案。#}
+{#                        </p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="jumbotron btn-info"
+                 style="background:url({{ url_for('static',filename='xiaoyi.jpg') }});height: 300px">
+                <div style="height: 160px;"></div>
+
+                <div class="col-center-block col-md-8">
+                    <form name="form_search" id="ant-search-form" role="search" action="/search" method="get">
+                        <div class="input-group input-group-lg">
+                            <input class="form-control" id="ant_s" name="q" placeholder="请输入区块高度、区块或交易散列值、地址等！"
+                                   type="text">
+                            <span class="input-group-btn">
+                            <button onclick="javascript:if($('#ant_s').val()!='')$('#ant-search-form').submit();"
+                                    class="btn btn-default" type="button" name="btn_search" id="btn_search"><span
+                                    class="glyphicon glyphicon-search"></span></button></span>
+                        </div><!-- /input-group -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="col-md-12 dierlan">
+                <div class="pull-center">
+                    <h3>行情动态</h3>
+                    <hr align="center" width="100%" color="#FF0000" size="5"/>
+                </div>
+            </div>
+            <div class="col-md-12 dierlan">
+                <table class="table table-striped table-hover hqdt">
+                    <thead>
+                    <tr class='info'>
+                        <th style='vertical-align: middle;text-align: left'>交易市场</th>
+                        <th style='vertical-align: middle;text-align: left;'>最新价</th>
+                        <th style='vertical-align: middle;text-align: left;'>最高价</th>
+                        <th style='vertical-align: middle;text-align: left;'>最低价</th>
+                        <th style='vertical-align: middle;text-align: right;'>交易量</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div style="width: 100%; height: 255px;" id="sosobtc_market"></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="col-md-12 dierlan">
+                <div class="pull-center">
+                    <h3>系统动态</h3>
+                    <hr align="center" width="100%" color="#FF0000" size="5"/>
+                </div>
+            </div>
+
+            <div class="col-md-12 dierlan">
+                <div class="sy_xtdd">
+                    {% include "xtdd.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 clearfix">
+            <div>
+                <div class="pull-left">
+                    <h3>区块信息</h3>
+                </div>
+                <div class="pull-right">
+                    <div class="dandu"><a class="btn btn-default btn-info" href="/block">
+                        <span>更多区块</span>
+                    </a></div>
+                </div>
+                <div>
+                    <hr align="center" width="100%" color="#FF0000" size="5"/>
+                </div>
+            </div>
+
+            <div class="sy_block">
+                {% include "block_s.html" %}
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 clearfix">
+            <div>
+                <div class="pull-left">
+                    <h3>交易信息
+                        <small>(已忽略矿工挖矿交易)</small>
+                    </h3>
+
+                </div>
+                <div class="pull-right">
+                    <div class="dandu"><a class="btn btn-default btn-info" href="/transaction">
+                        <span>更多交易</span>
+                    </a></div>
+                </div>
+                <div>
+                    <hr align="center" width="100%" color="#FF0000" size="5"/>
+                </div>
+
+            </div>
+            <div class="sy_tx">
+                {% include "tx_s.html" %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 clearfix">
+            <div>
+                <div class="pull-left">
+                    <h3>地址信息</h3>
+                </div>
+                <div class="pull-right">
+                    <div class="dandu"><a class="btn btn-default btn-info" href="/address">
+                        <span>更多地址</span>
+                    </a></div>
+                </div>
+                <div>
+                    <hr align="center" width="100%" color="#FF0000" size="5"/>
+                </div>
+
+            </div>
+            <div class="sy_address">
+                {% include "address_s.html" %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
