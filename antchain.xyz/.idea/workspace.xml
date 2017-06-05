@@ -1,178 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e29b138-a280-4d1c-95bf-1585ec2d2c4a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/donate.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/images/assets/AntChain.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/images/assets/antchainxyz.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/images/assets/antfans.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/images/assets/nest.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/images/assets/onchain.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/images/assets/otcgo.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/images/assets/weangel.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/logo.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/10.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/11.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/12.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/13.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/3.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/4.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/5.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/6.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/7.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/8.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/sorry/9.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/xiaoyi.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Readme.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/admin/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/admin/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/admin/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/api/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/api/errors.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/api/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/auth/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/auth/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/auth/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/email.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/functions.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/main/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/main/errors.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/main/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/main/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/css/animate.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/css/qunit-1.11.0.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/css/zdy.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/feiqi/wow.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/feiqi/wow.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/bootstrap-paginator.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/bootstrap-paginator.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/charts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/echarts.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/moment-with-locales.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/moment.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/overhang.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/qunit-1.11.0.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/wow.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/static/js/wow.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/11.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/404.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/500.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/_address_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/_block_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/_tx_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/address.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/address_address.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/address_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/address_top.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/asset.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/asset_hash.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/asset_issue_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/asset_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/change_email.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/change_password.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/email/change_email.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/email/change_email.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/email/confirm.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/email/confirm.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/email/reset_password.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/email/reset_password.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/login.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/register.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/reset_password.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/auth/unconfirmed.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/block.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/block_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/blocks.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/charts_base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/claim_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/contract_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/enrollment_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/gonggao.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/hangqing.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/height.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/height_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/invocation_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/issue_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/miner_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/mongo_error.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/publish_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/register_tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/sorry.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/tx.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/tx_hash.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/tx_hash_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/tx_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/validator.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/validator_s.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/xtdd.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/wx/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/wx/errors.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/wx/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/zhuanhuan.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/babel.cfg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/celery_worker.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/exchange.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/manage.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/requitemets.txt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/antchain_mainnet.py" afterPath="" />
+    <list default="true" id="2e29b138-a280-4d1c-95bf-1585ec2d2c4a" name="Default" comment="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。">
       <change type="DELETED" beforePath="$PROJECT_DIR$/readme" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/bootstrap-paginator.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/bootstrap-paginator.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/charts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/donate.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/echarts.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/logo.ico" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/qunit-1.11.0.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/qunit-1.11.0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/xiaoyi.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/zdy.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/404.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/500.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/address.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/address_address.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/address_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/address_top.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/asset.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/asset_hash.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/asset_issue_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/asset_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/block.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/block_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/blocks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/charts_base.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/claim_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/contract_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/enrollment_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/gonggao.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/hangqing.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/height.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/height_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/issue_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/miner_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/publish_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/register_tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/sorry.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/tx.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/tx_hash.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/tx_hash_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/tx_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/validator.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/validator_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/xtdd.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/zhuanhuan.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ImportDB/.idea/sync_block.iml" afterPath="$PROJECT_DIR$/../ImportDB/.idea/sync_block.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antsharesjsonrpc.py" afterPath="$PROJECT_DIR$/antsharesjsonrpc.py" />
     </list>
+    <ignored path="$PROJECT_DIR$/.idea/shelf/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -189,8 +22,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+            <state relative-caret-position="210">
+              <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -478,20 +311,64 @@
       <option name="presentableId" value="Default" />
       <updated>1490630985923</updated>
     </task>
+    <task id="LOCAL-00001" summary="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。">
+      <created>1496678650441</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1496678650441</updated>
+    </task>
+    <task id="LOCAL-00002" summary="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。">
+      <created>1496678949384</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1496678949384</updated>
+    </task>
+    <task id="LOCAL-00003" summary="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。">
+      <created>1496679317943</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1496679317943</updated>
+    </task>
+    <task id="LOCAL-00004" summary="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。">
+      <created>1496679338512</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1496679338512</updated>
+    </task>
+    <task id="LOCAL-00005" summary="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。">
+      <created>1496679484307</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1496679484307</updated>
+    </task>
+    <task id="LOCAL-00006" summary="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。">
+      <created>1496679652459</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1496679652460</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="27" width="1922" height="1021" extended-state="6" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20160428" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5028818" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33058822" sideWeight="0.49711815" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33058822" sideWeight="0.49711815" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282353" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20160428" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -520,6 +397,14 @@
               <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
                 <collection />
               </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
             </State>
           </value>
         </entry>
@@ -528,6 +413,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。" />
+    <option name="LAST_COMMIT_MESSAGE" value="重新构建了程序的框架架构，使用了工厂式结构，有利于后续功能的添加。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -543,8 +432,8 @@
     <entry file="file://$PROJECT_DIR$/1.py" />
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+        <state relative-caret-position="210">
+          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding />
         </state>
       </provider>
