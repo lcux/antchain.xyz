@@ -313,7 +313,7 @@ def ans_quota_and_worth():
     e9800_price, e9800_vol = D('0'), D('0')
     jubi_price, jubi_vol = D('0'), D('0')
     szzc51_price, szzc51_vol = D('0'), D('0')
-    rate, btc_price = D('0')
+    rate, btc_price = D('0'),D('0')
 
     for n in cur:
         if n['_id'] == 'yunbi':
