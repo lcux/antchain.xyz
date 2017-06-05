@@ -3,7 +3,8 @@
 
 import requests
 
-d = 'http://139.224.226.167:10332'
+# d = 'http://seed1.antshares.org:10332'
+d = 'http://localhost:10332'
 p = {"jsonrpc": "2.0", "method": "", "params": [], "id": 1}
 
 
@@ -115,6 +116,6 @@ if __name__ == '__main__':
     #    print(getblcok(getbestblockhash()))
     #    print(gettxout('cdafe40cf2b712886b08e838e1cfe1f5e258b106741a3be757059027a11ffa29'))
     #    print(getrawtransaction('3631f66024ca6f5b033d7e0809eb993443374830025af904fb51b0334f127cda'))
-    #    print(getblock(0))
+    print(getblock(getbestblockhash()))
     #    print(getbalance('c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'))
-    print('Nothing!')
+    # print('Nothing!')

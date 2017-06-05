@@ -3,9 +3,9 @@
 # author: lcux
 # licensed under the MIT License.
 # ########function ##########
-#对比地址里面的余额信息和utxo信息，计算两者是否相等，若相等，说明信息正确
-
+#对比地址里面的余额信息和utxo信息，计算两者是否相等，若相等，说明信息正确；不相等，则打印两者信息
 ############################
+
 from pymongo import MongoClient
 
 

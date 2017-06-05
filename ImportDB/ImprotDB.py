@@ -3,14 +3,12 @@
 # author: lcux
 # licensed under the MIT License.
 
-from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
 import antsharesjsonrpc
 import antsharesqr
-import datetime
-import time
 import sys
 import platform
+from functions import *
 
 
 # 区块模型
@@ -19,14 +17,13 @@ class Block:
         self.merkleroot = result['merkleroot']
         self.previousblockhash = result['previousblockhash']
         self.presentblockhash = result['hash']
-        self.nextblockhash = ''
         try:
             self.nextblockhash = result['nextblockhash']
         except:
-            pass
-        self.nextminer = result['nextminer']
-        self.datetime = datetime.datetime.fromtimestamp(result['time'])
-        self.height = result['height']
+            self.nextblockhash = ''
+        self.nextminer = result['nextconsensus']
+        self.datetime = datetime.datetime.utcfromtimestamp(result['time'])
+        self.height = result['index']
         self.nonce = result['nonce']
         self.version = result['version']
         self.size = result['size']
@@ -62,7 +59,7 @@ class Block:
 
 # 交易模型
 class Transaction:
-    def __init__(self, tx, block_hash, block_height, timestamp, tx_vin, tx_vout, cost):
+    def __init__(self, tx, block_hash, block_height, timestamp, tx_vin, tx_vout, id):
         self.txid = tx['txid']
         self.version = tx['version']
         self.attributes = tx['attributes']
@@ -82,7 +79,9 @@ class Transaction:
         self.type = tx['type']
         self.block_hash = block_hash
         self.block_height = block_height
-        self.cost = cost
+        self.net_fee = tx['net_fee']
+        self.sys_fee = tx['sys_fee']
+        self.id = id  # 主要用于方面检索，快速翻页使用，快速查询数量,挖矿交易时该字段为空字符串
 
         if self.type == 'MinerTransaction':
             self.nonce = tx['nonce']
@@ -100,13 +99,17 @@ class Transaction:
         elif self.type == 'RegisterTransaction':
             self.asset = tx['asset']
             self.name = "资产登记"
+            self.description = ''
         elif self.type == 'AgencyTransaction':
             self.name = "委托交易"
         elif self.type == 'PublishTransaction':
-            self.name = "智能合约发布"
+            self.name = "合约发布交易"
             self.contract = tx['contract']
+        elif self.type == 'InvocationTransaction':
+            self.name = "合约调用交易"
+            self.script = tx['script']
         else:
-            self.name = "无效交易"
+            self.name = "未知属性交易"
 
     def new_transaction(self):
         collection = {
@@ -117,13 +120,15 @@ class Transaction:
             'size': self.size,
             'vin': self.vin,
             'vout': self.vout,
-            'timestamp': datetime.datetime.fromtimestamp(self.timestamp),
+            'timestamp': datetime.datetime.utcfromtimestamp(self.timestamp),
             'scripts': self.scripts,
             'type': self.type,
             'block_hash': self.block_hash,
             'block_height': self.block_height,
             'name': self.name,
-            'cost': self.cost
+            'net_fee': self.net_fee,
+            'sys_fee': self.sys_fee,
+            'id': self.id
         }
 
         if self.type == 'MinerTransaction':
@@ -149,10 +154,13 @@ class Transaction:
             else:
                 self.asset['name'] = [{'name': '(无名称)', 'lang': 'zh-CN'}, {'name': '(No Name)', 'lang': 'en'}]
                 collection['asset'] = self.asset
+            collection['description'] = self.description
         elif self.type == 'AgencyTransaction':
             pass
         elif self.type == 'PublishTransaction':
             collection['contract'] = self.contract
+        elif self.type == 'InvocationTransaction':
+            collection['script'] = self.script
         else:
             pass
 
@@ -164,32 +172,104 @@ class Transaction:
 
 # 地址模型
 class Address:
-    def __init__(self, vout, timestamp, index):
+    def __init__(self, vout, timestamp, index, id):
         self.addr = vout['address']
         self.txid = vout['txid']
         self.unit = vout['unit']
         self.value = vout['value']
         self.asset = vout['asset']
-        self.timestamp = timestamp
+        self.tag = []
+        self.timestamp = datetime.datetime.utcfromtimestamp(timestamp)
         self.utxo = {'txid': self.txid, 'index': index, 'value': self.value, 'unit': self.unit, 'asset': self.asset}
+        self.id = id  # 用于查询地址数量，快速检查地址总数
 
     def new_address(self):
         collection = {
             '_id': self.addr,
             'address': self.addr,
-            # 'balance': [{'value': self.value, 'unit': self.unit}],
-            'balance':{self.asset:{'value':self.value,'unit':self.unit}},
+            'balance': {self.asset: {'value': self.value, 'unit': self.unit}},
             'txs': [{'txid': self.txid}],
-            # 'utxo':{self.asset:{self.utxo}},
             'utxo': {self.asset: [self.utxo]},
-            'lasttime': datetime.datetime.fromtimestamp(self.timestamp),
-            'firsttime': datetime.datetime.fromtimestamp(self.timestamp),
-            'qrcode': 'address/' + self.addr + '.png'
+            'lasttime': self.timestamp,
+            'firsttime': self.timestamp,
+            'qrcode': 'address/' + self.addr + '.png',
+            'tag': self.tag,
+            'id': self.id
         }
         return collection
 
     def __repr__(self):
         return 'Address %r' % self.addr
+
+
+# 统计数据模型
+class Daily_Count:
+    def __init__(self, date, tx_num_growth, address_num_growth, ans_hold, anc_hold, ans_quota, ans_worth, txs,
+                 addresses,ans_holding_num):
+        self.date = date
+        self.tx_count = tx_num_growth
+        self.address_count = address_num_growth
+        self.ans_hold = ans_hold
+        self.anc_hold = anc_hold
+        self.ans_quota = ans_quota
+        self.ans_worth = ans_worth
+        self.txs = txs
+        self.addresses = addresses
+        self.ans_holding_num=ans_holding_num
+
+    def new_daily_count(self):
+        collection = {
+            '_id': self.date,
+            'tx_count_growth': self.tx_count,
+            'address_count_growth': self.address_count,
+            'ans_holding': self.ans_hold,
+            'anc_holding': self.anc_hold,
+            'ans_quota': self.ans_quota,
+            'ans_worth': self.ans_worth,
+            'txs': self.txs,
+            'addresses': self.addresses,
+            'ans_holding_num':self.ans_holding_num
+        }
+        return collection
+
+
+##########
+## 功能函数
+#########
+# @fn_timer
+def daily_counts(block_height, block_time):
+    asset_hold = []
+    try:
+        if block_height != 0:
+            pre_tx_utc = db.Block.find_one({'_id': block_height - 1}, {'timestamp': 1})['timestamp']
+            present_tx_utc = datetime.datetime.utcfromtimestamp(block_time)
+            if pre_tx_utc.day < present_tx_utc.day:
+                previous_daily_address_count = address_growth(year=pre_tx_utc.year, month=pre_tx_utc.month,
+                                                              day=pre_tx_utc.day,
+                                                              num_days=1)
+                previous_daily_no_mt_tx_count = tx_no_mt_growth(year=pre_tx_utc.year, month=pre_tx_utc.month,
+                                                                day=pre_tx_utc.day, num_days=1)
+                # asset_cur=db.Transaction.find({'type': 'RegisterTransaction'})
+                # for asset in asset_cur:
+                #     asset_id=asset['_id']
+                #     counts=asset_holding(asset_id)
+                #     asset_hold.append({asset_id:counts})
+                if datetime.datetime.utcnow() - present_tx_utc < datetime.timedelta(seconds=30):
+                    ans_quota, ans_worth = ans_quota_and_worth()
+                else:
+                    ans_quota =get_yunbi_ans_time(pre_tx_utc)
+                    ans_worth = str(D(ans_quota)*100000000)
+
+                ans_holding_num=ans_holding_100_500_1000_5000_10000_100000()
+
+                daily_count = Daily_Count(pre_tx_utc, previous_daily_no_mt_tx_count, previous_daily_address_count,
+                                          ans_holding(), anc_holding(), ans_quota, ans_worth, transaction_no_mt_count(),
+                                          address_count(),ans_holding_num)
+                daily_count_collection = daily_count.new_daily_count()
+                db.Daily_Count.insert_one(daily_count_collection)
+                print('insert daily_count')
+    except Exception as e:
+        print(e, 'daily_count')
 
 
 def generate_address_qrcode(address):
@@ -205,64 +285,93 @@ def generate_address_qrcode(address):
         print('???')
 
 
-def sync_info():
-    while True:
-        db_block_count = db.Block.count()
-        chain_block_count = antsharesjsonrpc.getblockcount()
+##########
+## 处理过程
+##########
 
-        while db_block_count < chain_block_count:
-            sync_block(db_block_count)
-            db_block_count += 1
+def sync_address(tx_id, tx_vin, tx_vout, timestamp):
+    r = tx_vin
+    c = tx_vout
+    vin_address = set()
+    vout_address = set()
 
-        # ###未确认交易的入库
-        # weiquerenjiaoyi=antsharesjsonrpc.getrawmempool()
-        # # weiquerenjiaoyi.append('c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b')
-        # if weiquerenjiaoyi:
-        #     db.NotTransaction.drop()
-        #     for w in weiquerenjiaoyi:
-        #         result=antsharesjsonrpc.getrawtransaction(w)
-        #
-        #         # 处理交易
-        #         # 未完成交易费用的编码,交易的输入输出具体模型设计
-        #         transaction = Transaction(result, '', '',int(time.time()),
-        #                                       jiaoyi_shuru_neirong_quanbu, jiaoyi_shuchu_neirong_quanbu,
-        #                                       tx_feiyong)
-        #         tx_collection = transaction.new_transaction()
-        #         ss=db.NotTransaction.insert_one(tx_collection)
-        #         print('push one NotTransaction!')
-        time.sleep(7)
+    for x in range(len(r)):
+        txid = r[x]['txid']
+        index = r[x]['index']
+        value = r[x]['value']
+        # unit = r[x]['unit']
+        # precision = r[x]['precision']
+        asset = r[x]['asset']
+        addr_cur_vin = db.Address.find_one({'_id': r[x]['address']})
+        if addr_cur_vin:
+            # utxo and balance
+            for ux in addr_cur_vin['utxo'][asset]:
+                try:
+                    if txid == ux['txid'] and index == ux['index']:
+                        addr_cur_vin['utxo'][asset].remove(ux)
+                        addr_cur_vin['balance'][asset]['value'] = str(
+                            D(addr_cur_vin['balance'][asset]['value']) - D(value))
+                        db.Address.update({'_id': r[x]['address']},
+                                          {'$set': {'balance': addr_cur_vin['balance'], 'utxo': addr_cur_vin['utxo']}})
+                except Exception as e:
+                    print(e, 'update_vin_address')
+            vin_address.add(r[x]['address'])
+        else:
+            print('impossible error ，address！')
 
+    for y in range(len(c)):
+        addr_cur_vout = db.Address.find_one({'_id': c[y]['address']})
+        if addr_cur_vout is None:
+            # iid = db.Address.count()
+            # iid = db.Address.find({}, {'id': 1}).sort('firsttime', DESCENDING)[0]['id'] + 1
+            id = ''
+            try:
+                cur = db.Address.find({}, {'id': 1}).sort('id', DESCENDING)
 
-def sync_block(block_height):
-    result = antsharesjsonrpc.getblock(block_height)
-    block_txs = result['tx']
-    block_hash = result['hash']
-    block_time = result['time']
-    block_cost = 0
-
-    # 处理交易数据,返回交易总费用
-    for tx in block_txs:
-        block_cost += sync_trasacton(tx, block_hash, block_height, block_time)
-
-    # 处理区块数据
-    pre_height = result['height'] - 1
-    q = db.Block.find_one({'_id': pre_height}, {'nextblockhash': 1})
-    # return None if no matching document is found.
-    if q:
-        if not q['nextblockhash']:
-            q['nextblockhash'] = result['hash']
-            db.Block.update({'_id': pre_height}, {'$set': {'nextblockhash': q['nextblockhash']}})
-            # print('Block', block_height - 1, 'Done！')
-    else:
-        print('no block!')
-    block = Block(result, block_cost)
-    block_collection = block.new_block()
-    try:
-        db.Block.insert_one(block_collection)
-        print("Block", block_height, "in mongodb！")
-        # print('Block fee', block_cost, 'Antcoin')
-    except DuplicateKeyError:
-        print('duplicate block', block_height)
+                id = cur[0]['id'] + 1
+            except Exception as e:
+                print(e, 'sync_address')
+                id = 0
+            addr = Address(c[y], timestamp, y, id)
+            address_collection = addr.new_address()
+            try:
+                db.Address.insert_one(address_collection)
+                generate_address_qrcode(c[y]['address'])
+                # print('Add New Address')
+            except DuplicateKeyError:
+                print('duplicate address', c[y]['address'])
+        else:
+            txid = c[y]['txid']
+            value = c[y]['value']
+            unit = c[y]['unit']
+            # precision = c[y]['precision']
+            asset = c[y]['asset']
+            utxo = {'txid': txid, 'index': y, 'value': value, 'unit': unit, 'asset': asset}
+            if asset not in addr_cur_vout['utxo']:
+                addr_cur_vout['utxo'][asset] = []
+                addr_cur_vout['utxo'][asset].append(utxo)
+                addr_cur_vout['balance'][asset] = {'value': value, 'unit': unit}
+            if utxo not in addr_cur_vout['utxo'][asset]:
+                addr_cur_vout['utxo'][asset].append(utxo)
+                addr_cur_vout['balance'][asset]['value'] = str(D(addr_cur_vout['balance'][asset]['value']) + D(value))
+            try:
+                db.Address.update({'_id': c[y]['address']},
+                                  {'$set': {'balance': addr_cur_vout['balance'], 'utxo': addr_cur_vout['utxo']}})
+            except Exception as e:
+                print(e, 'update_vout_address')
+            vout_address.add(c[y]['address'])
+    # 更新本次交易涉及的地址的交易字段和交易时间字段
+    addresses = vin_address | vout_address
+    for d in addresses:
+        addr_d = db.Address.find_one({'_id': d})
+        t = {'txid': tx_id}
+        if t in addr_d['txs']:
+            print('An address has two transactions in a tx and the address is the first use', d)
+        else:
+            addr_d['lasttime'] = datetime.datetime.utcfromtimestamp(timestamp)
+            addr_d['txs'].append({'txid': tx_id})
+            db.Address.update({'_id': d}, {'$set': {'txs': addr_d['txs'], 'lasttime': addr_d['lasttime']}})
+            print('Change', d, 'txs and lasttime.')
 
 
 def sync_trasacton(tx, block_hash, block_height, block_time):
@@ -270,7 +379,7 @@ def sync_trasacton(tx, block_hash, block_height, block_time):
     txid = tx['txid']
     tx_vin = []
     tx_vout = []
-    tx_cost = 0
+    id = 0
 
     # 处理交易输入
     for vin in tx['vin']:
@@ -290,127 +399,93 @@ def sync_trasacton(tx, block_hash, block_height, block_time):
         c = db.Transaction.find_one({'_id': vout['asset']}, {'asset': 1})
         unit = c['asset']['name'][0]['name']
         precision = c['asset']['precision']
-        if precision:
-            value = float(value)
-        else:
-            value = int(value)
         to = ''
         v = {'address': address, 'value': value, 'unit': unit, 'asset': asset, 'precision': precision, 'txid': txid,
              'to': to}
         tx_vout.append(v)
 
-    # 处理地址数据,返回交易费用
+    # 处理地址数据
     if tx_vin or tx_vout:
-        if db.Transaction.find_one({'_id': tx['txid']}) is None:
-            tx_cost = sync_address(txid, tx_vin[:], tx_vout[:], block_time)
-    else:
-        tx_cost = 0
+        sync_address(txid, tx_vin[:], tx_vout[:], block_time)
 
-    transaction = Transaction(tx, block_hash, block_height, block_time, tx_vin, tx_vout, tx_cost)
-    tx_collection = transaction.new_transaction()
-    if db.Transaction.find_one({'_id': tx['txid']}) is None:
+    # id = db.Transaction.count()
+    # id = db.Transaction.find({}, {'id': 1}).sort('timestamp', DESCENDING)[0]['id'] + 1
+    if tx['type']=='MinerTransaction':
+        id=0
+    else:
         try:
-            db.Transaction.insert_one(tx_collection)
-            # print('Tx fee', tx_cost, 'Antcoin')
+            cur = db.Transaction.find({'type': {'$ne': 'MinerTransaction'}}, {'id': 1}).sort('id', DESCENDING)
+            id = cur[0]['id'] + 1
         except Exception as e:
-            print('duplicate transaction', tx)
-            print(e)
+            print(e, 'sync_transaction')
+            id = 0
+
+    transaction = Transaction(tx, block_hash, block_height, block_time, tx_vin, tx_vout, id)
+    tx_collection = transaction.new_transaction()
+    try:
+        db.Transaction.insert_one(tx_collection)
+        # print('Tx fee', tx_cost, 'Antcoin')
+    except Exception as e:
+        print('duplicate transaction', tx)
+        print(e)
+    tx_cost = str(D(tx['net_fee']) + D(tx['sys_fee']))
     return tx_cost
 
 
-def sync_address(tx_id, tx_vin, tx_vout, timestamp):
-    tx_cost = 0
-    r = tx_vin
-    c = tx_vout
-    vin_anc_count = 0
-    vout_anc_count = 0
-    vin_address = set()
-    vout_address = set()
+def sync_block(block_height):
+    result = antsharesjsonrpc.getblock(block_height)
+    block_txs = result['tx']
+    block_hash = result['hash']
+    block_time = result['time']
+    block_cost = D('0')
 
-    for x in range(len(r)):
-        if r[x]['unit'] == '小蚁币':
-            vin_anc_count += r[x]['value']
-
-        txid = r[x]['txid']
-        index = r[x]['index']
-        value = r[x]['value']
-        unit = r[x]['unit']
-        precision = r[x]['precision']
-        asset = r[x]['asset']
-        addr_cur_vin = db.Address.find_one({'_id': r[x]['address']})
-        if addr_cur_vin:
-            addr_cur_vin['balance'][asset]['value'] -= value
-            if precision:
-                fs = '%0.' + str(precision) + 'f'
-                addr_cur_vin['balance'][asset]['value'] = float(fs % addr_cur_vin['balance'][asset]['value'])
-            # utxo
-            for ux in addr_cur_vin['utxo'][asset]:
-                try:
-                    if txid == ux['txid'] and index == ux['index']:
-                        addr_cur_vin['utxo'][asset].remove(ux)
-                        db.Address.update({'_id': r[x]['address']}, {'$set': {'balance': addr_cur_vin['balance'],'utxo': addr_cur_vin['utxo']}})
-                except Exception as e:
-                    print(e)
-            vin_address.add(r[x]['address'])
+    # 处理交易数据,返回交易总费用
+    for tx in block_txs:
+        if db.Transaction.find_one({'_id': tx['txid']}) is None:
+            block_cost = block_cost + D(sync_trasacton(tx, block_hash, block_height, block_time))
         else:
-            print('impossible error！')
-
-    for y in range(len(c)):
-        if c[y]['unit'] == '小蚁币':
-            vout_anc_count += c[y]['value']
-
-        addr_cur_vout = db.Address.find_one({'_id': c[y]['address']})
-        if addr_cur_vout is None:
-            addr = Address(c[y], timestamp, y)
-            address_collection = addr.new_address()
-            try:
-                db.Address.insert_one(address_collection)
-                generate_address_qrcode(c[y]['address'])
-                # print('Add New Address')
-            except DuplicateKeyError:
-                print('duplicate address', c[y]['address'])
-        else:
-            txid = c[y]['txid']
-            value = c[y]['value']
-            unit = c[y]['unit']
-            precision = c[y]['precision']
-            asset = c[y]['asset']
-            # 'balance':{self.asset:{'value':self.value,'unit':self.unit}}
-            if asset in addr_cur_vout['balance'].keys():
-                addr_cur_vout['balance'][asset]['value'] += value
-                if precision:
-                    fs = '%0.' + str(precision) + 'f'
-                    addr_cur_vout['balance'][asset]['value'] = float(fs % addr_cur_vout['balance'][asset]['value'])
-            else:
-                addr_cur_vout['balance'][asset]={'value': value, 'unit': unit}
-            # utxo
-            utxo = {'txid': txid, 'index': y, 'value': value, 'unit': unit, 'asset': asset}
-            if asset not in addr_cur_vout['utxo']:
-                addr_cur_vout['utxo'][asset] = []
-            addr_cur_vout['utxo'][asset].append(utxo)
-            db.Address.update({'_id': c[y]['address']}, {'$set': {'balance': addr_cur_vout['balance'],'utxo': addr_cur_vout['utxo']}})
-            vout_address.add(c[y]['address'])
-    # 更新本次交易涉及的地址的交易字段和交易时间字段
-    addresses = vin_address | vout_address
-    for d in addresses:
-        addr_d = db.Address.find_one({'_id': d})
-        t={'txid':tx_id}
-        if t in addr_d['txs']:
-            print('An address has two transactions in a tx and the address is the first use', d)
-        else:
-            addr_d['lasttime'] = datetime.datetime.fromtimestamp(timestamp)
-            addr_d['txs'].append({'txid': tx_id})
-            db.Address.update({'_id': d}, {'$set': {'txs': addr_d['txs'], 'lasttime': addr_d['lasttime']}})
-            print('Change', d, 'txs and lasttime.')
-    #计算交易费用
-    if vin_anc_count:
-        tx_cost = vin_anc_count - vout_anc_count
-        tx_cost = float('%0.8f' % tx_cost)
-        if not tx_cost:
-            tx_cost = 0
-        return tx_cost
+            block_cost = D(tx['net_fee']) + D(tx['sys_fee'])
+    # 处理区块数据
+    pre_height = result['index'] - 1
+    q = db.Block.find_one({'_id': pre_height}, {'nextblockhash': 1})
+    # return None if no matching document is found.
+    if q:
+        if not q['nextblockhash']:
+            q['nextblockhash'] = result['hash']
+            db.Block.update({'_id': pre_height}, {'$set': {'nextblockhash': q['nextblockhash']}})
+            # print('Block', block_height - 1, 'Done！')
     else:
-        return tx_cost
+        print('no block!')
+    block = Block(result, str(block_cost))
+    block_collection = block.new_block()
+
+    ##处理每日更新数据
+    daily_counts(block_height, block_time)
+
+    try:
+        db.Block.insert_one(block_collection)
+        if block_height % 1000 == 0:
+            print("Block", block_height, "in mongodb！")
+            # print('Block fee', block_cost, 'Antcoin')
+    except DuplicateKeyError:
+        print('duplicate block', block_height)
+
+
+def sync_info():
+    while True:
+        # db_block_count = db.Block.count()
+        try:
+            cur = db.Block.find({}, {'_id': 1}).sort('_id', DESCENDING)
+            db_block_count = cur[0]['_id'] + 1
+        except Exception as e:
+            print(e, 'sync_info')
+            db_block_count = 0
+        chain_block_count = antsharesjsonrpc.getblockcount()
+
+        while db_block_count < chain_block_count:
+            sync_block(db_block_count)
+            db_block_count += 1
+        time.sleep(7)
 
 
 if __name__ == '__main__':
@@ -418,5 +493,5 @@ if __name__ == '__main__':
         db = MongoClient().antchain_mainnet
         sync_info()
     except Exception as e:
-        print(e)
+        print(e, )
         sys.exit()

@@ -16,8 +16,6 @@ def make_qr(str, save):
     img = qr.make_image()
     img.save(save)
 
-
-
 def make_logo_qr(str, logo, save):
 
     qr = qrcode.QRCode(
@@ -45,7 +43,6 @@ def make_logo_qr(str, logo, save):
         size_w = int(img_w / factor)
         size_h = int(img_h / factor)
 
-
         icon_w, icon_h = icon.size
         if icon_w > size_w:
             icon_w = size_w
@@ -70,5 +67,5 @@ if __name__ == '__main__':
     cur_address=db.Address.find({},{'address':1,'_id':-1})
     for ad in cur_address:
         make_qr(ad['address'],save_path+ad['address']+'.png')
-    # make_qr(str,save_path)
-    #make_logo_qr(str, logo, save_path)
+        # make_qr(str,save_path)
+        #make_logo_qr(str, logo, save_path)
