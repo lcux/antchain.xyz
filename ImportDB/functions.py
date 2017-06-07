@@ -159,7 +159,7 @@ def ans_holding_100_500_1000_5000_10000_100000():
     for s in cur_ad:
         for x in s['balance'].keys():
             if x == asset and D(s['balance'][x]['value']) != D('0'):
-                zongde.append([s['_id'], s['balance'][x]['value'], s['lasttime']])
+                zongde.append([s['_id'], D(s['balance'][x]['value']), s['lasttime']])
             else:
                 continue
     zongde.sort(key=operator.itemgetter(1), reverse=True)
@@ -313,7 +313,7 @@ def ans_quota_and_worth():
     e9800_price, e9800_vol = D('0'), D('0')
     jubi_price, jubi_vol = D('0'), D('0')
     szzc51_price, szzc51_vol = D('0'), D('0')
-    rate, btc_price = D('0')
+    rate, btc_price = D('0'),D('0')
 
     for n in cur:
         if n['_id'] == 'yunbi':
@@ -356,8 +356,8 @@ def ans_quota_and_worth():
         bittrex_vol / all_vol * bittrex_price * btc_price * D(rate)) + (e9800_vol / all_vol * e9800_price) + (
                     jubi_vol / all_vol * jubi_price) + (szzc51_vol / all_vol * szzc51_price)
     ans_worth = ans_quota * 100000000
-    ans_quota = ans_quota.quantize(D('0.00000000'))
-    ans_worth = ans_worth.quantize(D('0.00000000'))
+    ans_quota = ans_quota.quantize(D('0.0000'))
+    ans_worth = ans_worth.quantize(D('0.0000'))
 
     return str(ans_quota), str(ans_worth)
 
@@ -430,7 +430,7 @@ def get_cny_usd():
     host = 'https://ali-waihui.showapi.com'
     path = '/waihui-list'
     method = 'GET'
-    appcode = 'XXXXXXXXXXXXXXX'
+    appcode = 'XX'
     querys = 'code=USD'
     bodys = {}
     url = host + path + '?' + querys
@@ -453,10 +453,14 @@ def get_yunbi_ans_time(timestamp=0):
     response=urlopen(request)
     content=response.read()
     data=json.loads(content.decode('utf-8'))
-    if data:
-        # print(data,data[0][4])
-        # print(type(data[0][4]))
-        return str(data[0][4])
+    try:
+        if data:
+            # print(data,data[0][4])
+            # print(type(data[0][4]))
+            return str(data[0][4])
+    except Exception as e:
+        print(e,"get yunbi ans error")
+        exit(0)
 
 
 def get_coinmarketcap_ans():
@@ -471,7 +475,7 @@ def get_coinmarketcap_ans():
 
 def balace_change_send_message(address,timestamp,asset,num,phone,code):
     req = api.AlibabaAliqinFcSmsNumSendRequest()
-    req.set_app_info(appinfo('XXXXX', 'XXXXXXXXXXXXXXXXXXXXXX'))
+    req.set_app_info(appinfo('XX', 'XX'))
 
     req.extend = ""
     req.sms_type = "normal"
